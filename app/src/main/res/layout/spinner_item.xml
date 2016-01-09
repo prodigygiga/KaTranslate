@@ -5,7 +5,8 @@
 <TextView
     android:layout_width="wrap_content"
     android:layout_height="50dp"
+    android:gravity="center_vertical"
     android:layout_gravity="center"
     android:id="@+id/language_name"
-    android:textSize="16dp"/>
+    android:textSize="18dp"/>
 </LinearLayout>

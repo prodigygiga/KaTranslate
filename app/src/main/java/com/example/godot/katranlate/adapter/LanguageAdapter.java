@@ -1,4 +1,4 @@
-package com.example.godot.katranlate.net;
+package com.example.godot.katranlate.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

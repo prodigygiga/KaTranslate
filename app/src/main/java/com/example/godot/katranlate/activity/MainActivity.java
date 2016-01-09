@@ -4,18 +4,19 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
 
 import com.example.godot.katranlate.R;
 import com.example.godot.katranlate.domain.models.Language;
-import com.example.godot.katranlate.net.LanguageAdapter;
+import com.example.godot.katranlate.adapter.LanguageAdapter;
 import com.example.godot.katranlate.service.TranslateService;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
     Spinner languageFrom;
     Spinner languageTo;
     ImageView startServiceButton;
@@ -26,11 +27,15 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        setTitle("თარგმნა");
+
         isTranslateServiceStarted = false;
 
 
         languageFrom = (Spinner) findViewById(R.id.set_language_from);
-        languageFrom.setAdapter(new LanguageAdapter(MainActivity.this,new Language[]{new Language(1,"ka","Georgian")}));
+        languageFrom.setAdapter(new LanguageAdapter(MainActivity.this,new Language[]{new Language(1,"ka","ქართული"),
+                new Language(1,"ka","ქართული"),
+                new Language(1,"ka","ქართული")}));
 
 
         languageTo = (Spinner) findViewById(R.id.set_language_to);
@@ -66,5 +71,10 @@ public class MainActivity extends Activity {
         stopService(new Intent(MainActivity.this, TranslateService.class));
         startServiceButton.setImageDrawable(getResources().getDrawable(R.drawable.play));
         isTranslateServiceStarted = false;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 }
