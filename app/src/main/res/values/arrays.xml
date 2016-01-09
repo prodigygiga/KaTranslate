@@ -9,9 +9,9 @@
 
     <string-array
         name="lang_names">
-        <item>English</item>
-        <item>Georgian</item>
-        <item>Russian</item>
+        <item>ინგლისური</item>
+        <item>ქართული</item>
+        <item>რუსული</item>
     </string-array>
 
 </resources>

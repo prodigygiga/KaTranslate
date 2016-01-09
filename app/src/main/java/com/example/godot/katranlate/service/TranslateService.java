@@ -5,6 +5,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.widget.Toast;
 
@@ -14,22 +15,43 @@ import com.example.godot.katranlate.domain.models.Language;
 import com.example.godot.katranlate.net.Translate;
 
 public class TranslateService extends Service {
+
     ClipboardManager clipboardManager;
     ClipData clipData;
     String clipString;
     ClipboardManager.OnPrimaryClipChangedListener clipChangedListener;
+    Language fromLanguage;
+    Language toLanguage;
 
     public TranslateService() {
     }
 
     @Override
     public IBinder onBind(Intent intent) {
+
         return null;
     }
 
+
+
+
+
     @Override
-    public void onCreate() {
-        super.onCreate();
+    public int onStartCommand(Intent intent, int flags, int startId) {
+
+
+        return super.onStartCommand(intent, flags, startId);
+    }
+
+    @Override
+    public void onStart(Intent intent, int startId) {
+        super.onStart(intent, startId);
+
+        Bundle extras = intent.getExtras();
+        fromLanguage = new Language(Integer.parseInt(extras.get("fromId").toString()),
+                extras.get("fromIso").toString(),extras.get("fromName").toString());
+        toLanguage = new Language(Integer.parseInt(extras.get("toId").toString()),
+                extras.get("toIso").toString(),extras.get("toName").toString());
 
         clipChangedListener = new ClipboardManager.OnPrimaryClipChangedListener() {
             @Override
@@ -49,15 +71,16 @@ public class TranslateService extends Service {
                     protected void onPreExecute() {
                         // Pre Code
                     }
+
                     protected String doInBackground(String... translateWord) {
                         // Background Code
                         String translatedText = "";
                         Translator translator = new YandexTranslator();
                         try {
-                            Language en = new Language(1, "en", "English");
-                            Language ge = new Language(2, "ka", "Georgian");
+//                            Language en = new Language(1, "en", "English");
+//                            Language ge = new Language(2, "ka", "Georgian");
 
-                            translatedText = translator.translate(translateWord[0], en, ge);
+                            translatedText = translator.translate(translateWord[0], fromLanguage, toLanguage);
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -72,7 +95,7 @@ public class TranslateService extends Service {
             }
         };
 
-        Toast.makeText(getBaseContext(),"Service Started",Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "Service Started", Toast.LENGTH_LONG).show();
 
         clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
         clipboardManager.addPrimaryClipChangedListener(clipChangedListener);
@@ -82,7 +105,7 @@ public class TranslateService extends Service {
     public void onDestroy() {
         super.onDestroy();
         clipboardManager.removePrimaryClipChangedListener(clipChangedListener);
-        Toast.makeText(getBaseContext(),"Service Stopped",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getBaseContext(), "Service Stopped", Toast.LENGTH_SHORT).show();
 //        stopSelf();
 
     }

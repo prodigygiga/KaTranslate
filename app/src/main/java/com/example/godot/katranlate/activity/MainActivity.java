@@ -7,17 +7,19 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 
 import com.example.godot.katranlate.R;
 import com.example.godot.katranlate.domain.models.Language;
 import com.example.godot.katranlate.adapter.LanguageAdapter;
+import com.example.godot.katranlate.net.Translate;
 import com.example.godot.katranlate.service.TranslateService;
 
 import java.util.List;
-
 
 
 public class MainActivity extends AppCompatActivity {
@@ -25,26 +27,62 @@ public class MainActivity extends AppCompatActivity {
     Spinner languageTo;
     ImageView startServiceButton;
     boolean isTranslateServiceStarted;
+    Language selectedFromLanguage;
+    Language selectedToLanguage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        selectedFromLanguage = new Language(1,"en","ინგლისური");
+        selectedToLanguage = new Language(2,"ka","ქართული");
+
         setTitle("თარგმნა");
 
         isTranslateServiceStarted = false;
 
-
-        languageFrom = (Spinner) findViewById(R.id.set_language_from);
         List<Language> langs = Language.fromCodes(
                 getResources().getStringArray(R.array.lang_codes),
                 getResources().getStringArray(R.array.lang_names));
-        languageFrom.setAdapter(new LanguageAdapter(MainActivity.this, langs.toArray(new Language[langs.size()])));
+
+
+        languageFrom = (Spinner) findViewById(R.id.set_language_from);
+        languageFrom.setAdapter(new LanguageAdapter(MainActivity.this, langs));
+        languageFrom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                stopTranslationService();
+                selectedFromLanguage = (Language) parent.getSelectedItem();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
 
         languageTo = (Spinner) findViewById(R.id.set_language_to);
-        languageTo.setAdapter(new LanguageAdapter(MainActivity.this, new Language[]{new Language(1, "ka", "Georgian")}));
+        languageTo.setAdapter(new LanguageAdapter(MainActivity.this, langs));
+        languageTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                stopTranslationService();
+                selectedToLanguage = (Language) parent.getSelectedItem();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        languageTo.setSelection(selectedToLanguage.getId());
+
+
 
         startServiceButton = (ImageView) findViewById(R.id.start_service_button);
 
@@ -63,7 +101,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startTranslationService() {
-        startService(new Intent(MainActivity.this, TranslateService.class));
+        Bundle extras = new Bundle();
+        extras.putString("fromId",selectedFromLanguage.getId().toString());
+        extras.putString("fromIso",selectedFromLanguage.getIso());
+        extras.putString("fromName",selectedFromLanguage.getName());
+
+        extras.putString("toId",selectedToLanguage.getId().toString());
+        extras.putString("toIso",selectedToLanguage.getIso());
+        extras.putString("toName",selectedFromLanguage.getName());
+
+        Intent intent = new Intent(MainActivity.this, TranslateService.class);
+        intent.putExtras(extras);
+
+        startService(intent);
         startServiceButton.setImageDrawable(getResources().getDrawable(R.drawable.stop));
         isTranslateServiceStarted = true;
 

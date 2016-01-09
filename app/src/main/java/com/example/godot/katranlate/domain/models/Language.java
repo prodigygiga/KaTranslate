@@ -7,7 +7,7 @@ import java.util.List;
  * Created by sergi on 09/01/16.
  */
 public class Language {
-    private int id;
+    private Integer id;
     private String iso;
     private String name;
 
@@ -23,13 +23,13 @@ public class Language {
         return languages;
     }
 
-    public Language(int id, String iso, String name) {
+    public Language(Integer id, String iso, String name) {
         this.id = id;
         this.iso = iso;
         this.name = name;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
