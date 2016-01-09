@@ -34,10 +34,16 @@ public class TranslateService extends Service {
         clipboardManager.addPrimaryClipChangedListener(new ClipboardManager.OnPrimaryClipChangedListener() {
             @Override
             public void onPrimaryClipChanged() {
-                clipData = clipboardManager.getPrimaryClip();
 
-                ClipData.Item item = clipData.getItemAt(0);
-                clipString = item.getText().toString();
+
+                try {
+                    clipData = clipboardManager.getPrimaryClip();
+
+                    ClipData.Item item = clipData.getItemAt(0);
+                    clipString = item.getText().toString();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
                 new AsyncTask<String, Void, String>() {
                     protected void onPreExecute() {
@@ -55,13 +61,11 @@ public class TranslateService extends Service {
                         }
                         return translatedText;
                     }
+
                     protected void onPostExecute(String result) {
                         Toast.makeText(getBaseContext(), result, Toast.LENGTH_SHORT).show();
                     }
                 }.execute(clipString);
-
-
-
             }
         });
     }
@@ -71,7 +75,7 @@ public class TranslateService extends Service {
         super.onDestroy();
 
         Toast.makeText(getBaseContext(),"Service Stopped",Toast.LENGTH_SHORT).show();
-        stopSelf();
+//        stopSelf();
 
     }
 }
