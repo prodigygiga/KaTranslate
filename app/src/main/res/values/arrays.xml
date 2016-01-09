@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array
+        name="lang_codes">
+        <item>en</item>
+        <item>ka</item>
+        <item>ru</item>
+    </string-array>
+
+    <string-array
+        name="lang_names">
+        <item>English</item>
+        <item>Georgian</item>
+        <item>Russian</item>
+    </string-array>
+
+</resources>

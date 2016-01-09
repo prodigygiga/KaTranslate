@@ -1,5 +1,8 @@
 package com.example.godot.katranlate.domain.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by sergi on 09/01/16.
  */
@@ -7,6 +10,17 @@ public class Language {
     private int id;
     private String iso;
     private String name;
+
+    static List<Language> fromCodes(String[] langCodes, String[] langNames){
+        List<Language> languages = new ArrayList<Language>();
+        int i = 0;
+        for (String code :
+                langCodes) {
+            languages.add(new Language(i, code, langNames[i]));
+        }
+
+        return languages;
+    }
 
     public Language(int id, String iso, String name) {
         this.id = id;

@@ -30,23 +30,20 @@ public class MainActivity extends Activity {
 
 
         languageFrom = (Spinner) findViewById(R.id.set_language_from);
-        languageFrom.setAdapter(new LanguageAdapter(MainActivity.this,new Language[]{new Language(1,"ka","Georgian")}));
+        languageFrom.setAdapter(new LanguageAdapter(MainActivity.this, new Language[]{new Language(1, "ka", "Georgian")}));
 
 
         languageTo = (Spinner) findViewById(R.id.set_language_to);
-        languageTo.setAdapter(new LanguageAdapter(MainActivity.this,new Language[]{new Language(1,"ka","Georgian")}));
+        languageTo.setAdapter(new LanguageAdapter(MainActivity.this, new Language[]{new Language(1, "ka", "Georgian")}));
 
         startServiceButton = (ImageView) findViewById(R.id.start_service_button);
 
         startServiceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!isTranslateServiceStarted)
-                {
+                if (!isTranslateServiceStarted) {
                     startTranslationService();
-                }
-                else
-                {
+                } else {
                     stopTranslationService();
                 }
 
@@ -54,15 +51,15 @@ public class MainActivity extends Activity {
         });
 
     }
-    private void startTranslationService()
-    {
+
+    private void startTranslationService() {
         startService(new Intent(MainActivity.this, TranslateService.class));
         startServiceButton.setImageDrawable(getResources().getDrawable(R.drawable.stop));
         isTranslateServiceStarted = true;
 
     }
-    private void stopTranslationService()
-    {
+
+    private void stopTranslationService() {
         stopService(new Intent(MainActivity.this, TranslateService.class));
         startServiceButton.setImageDrawable(getResources().getDrawable(R.drawable.play));
         isTranslateServiceStarted = false;
