@@ -28,34 +28,6 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final TextView resultTextView = (TextView)findViewById(R.id.activivty_main_resultTextView);
-
-
-
-        new AsyncTask<Void, Void, String>() {
-            protected void onPreExecute() {
-                // Pre Code
-            }
-            protected String doInBackground(Void... unused) {
-                // Background Code
-                String translatedText = "";
-                try {
-                    translatedText = Translate.execute("Hello", Language.ENGLISH, Language.GEORGIAN);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                return translatedText;
-            }
-            protected void onPostExecute(String result) {
-                resultTextView.setText(result);
-            }
-        }.execute();
-
-
-
-        startService(new Intent(MainActivity.this, TranslateService.class));
-
         isTranslateServiceStarted = false;
 
 
