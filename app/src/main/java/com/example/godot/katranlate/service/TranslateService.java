@@ -20,9 +20,16 @@ public class TranslateService extends Service {
         return null;
     }
 
+
+
+
+
     @Override
     public void onCreate() {
         super.onCreate();
+
+        Toast.makeText(getBaseContext(),"Service Started",Toast.LENGTH_LONG).show();
+
 
         clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
         clipboardManager.addPrimaryClipChangedListener(new ClipboardManager.OnPrimaryClipChangedListener() {
@@ -38,6 +45,15 @@ public class TranslateService extends Service {
             }
         });
 
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+
+        Toast.makeText(getBaseContext(),"Service Stopped",Toast.LENGTH_SHORT).show();
 
     }
 }
