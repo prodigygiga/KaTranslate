@@ -10,13 +10,11 @@
     android:background="#252621"
     tools:context=".activity.MainActivity">
 
-<<<<<<< HEAD
     <TextView
         android:id="@+id/activivty_main_resultTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello " />
-=======
 
     <Spinner
         android:layout_width="wrap_content"
@@ -42,6 +40,4 @@
         android:layout_below="@+id/set_language_to"
         android:layout_centerHorizontal="true" />
 
-
->>>>>>> 36cd6d81097aa92eadae8dc7fafd0175f58d0163
 </RelativeLayout>
