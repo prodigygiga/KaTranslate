@@ -31,10 +31,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setTitle("თარგმნა");
+        setTitle(getResources().getString(R.string.translate));
 
         isTranslateServiceStarted = false;
-
 
         languageFrom = (Spinner) findViewById(R.id.set_language_from);
         List<Language> langs = Language.fromCodes(
@@ -42,9 +41,8 @@ public class MainActivity extends AppCompatActivity {
                 getResources().getStringArray(R.array.lang_names));
         languageFrom.setAdapter(new LanguageAdapter(MainActivity.this, langs.toArray(new Language[langs.size()])));
 
-
         languageTo = (Spinner) findViewById(R.id.set_language_to);
-        languageTo.setAdapter(new LanguageAdapter(MainActivity.this, new Language[]{new Language(1, "ka", "Georgian")}));
+        languageTo.setAdapter(new LanguageAdapter(MainActivity.this, langs.toArray(new Language[langs.size()])));
 
         startServiceButton = (ImageView) findViewById(R.id.start_service_button);
 
@@ -56,10 +54,8 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     stopTranslationService();
                 }
-
             }
         });
-
     }
 
     private void startTranslationService() {
