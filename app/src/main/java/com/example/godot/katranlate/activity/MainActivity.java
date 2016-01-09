@@ -2,10 +2,7 @@ package com.example.godot.katranlate.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-
-import android.widget.TextView;
 
 import android.view.View;
 import android.widget.ImageView;
@@ -14,8 +11,6 @@ import android.widget.Spinner;
 
 import com.example.godot.katranlate.R;
 import com.example.godot.katranlate.service.TranslateService;
-import com.rmtheis.yandtran.language.Language;
-import com.rmtheis.yandtran.translate.Translate;
 
 public class MainActivity extends Activity {
     Spinner languageFrom;
