@@ -1,7 +1,5 @@
 package com.example.godot.katranlate.domain;
 
-import com.rmtheis.yandtran.language.Language;
-
 import java.util.List;
 
 /**
