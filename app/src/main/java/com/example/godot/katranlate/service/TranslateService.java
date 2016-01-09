@@ -1,4 +1,4 @@
-package com.example.godot.katranlate;
+package com.example.godot.katranlate.service;
 
 import android.app.Service;
 import android.content.ClipData;
