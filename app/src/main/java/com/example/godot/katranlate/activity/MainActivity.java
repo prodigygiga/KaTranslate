@@ -34,6 +34,7 @@ public class MainActivity extends Activity {
 
 
         languageTo = (Spinner) findViewById(R.id.set_language_to);
+        languageTo.setAdapter(new LanguageAdapter(MainActivity.this,new Language[]{new Language(1,"ka","Georgian")}));
 
         startServiceButton = (ImageView) findViewById(R.id.start_service_button);
 

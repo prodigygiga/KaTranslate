@@ -57,7 +57,7 @@ public class TranslateService extends Service {
                         Translator translator = new YandexTranslator();
                         try {
                             Language en = new Language(1, "en", "English");
-                            Language ge = new Language(1, "en", "English");
+                            Language ge = new Language(2, "ka", "Georgian");
                             translatedText = translator.translate(translateWord[0], en, ge);
 
                         } catch (Exception e) {

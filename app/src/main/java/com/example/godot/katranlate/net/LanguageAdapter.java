@@ -17,14 +17,14 @@ public class LanguageAdapter extends BaseAdapter {
     private Context context;
     private Language[] languages;
 
-    public  LanguageAdapter(Context context,Language[] languages)
+    public  LanguageAdapter(Context context, Language[] languages)
     {
         this.context = context;
         this.languages = languages;
     }
     @Override
     public int getCount() {
-        return 0;
+        return languages.length;
     }
 
     @Override
@@ -42,8 +42,8 @@ public class LanguageAdapter extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.spinner_item, null);
 
-        TextView textView = (TextView) view.findViewById(R.id.test);
-        textView.setText("bla");
+        TextView textView = (TextView) view.findViewById(R.id.language_name);
+        textView.setText(languages[position].getName());
 
         return view;
     }
