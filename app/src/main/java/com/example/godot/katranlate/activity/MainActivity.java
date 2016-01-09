@@ -30,7 +30,7 @@ public class MainActivity extends Activity {
 
         final TextView resultTextView = (TextView)findViewById(R.id.activivty_main_resultTextView);
 
-        Translate.setKey("trnsl.1.1.20160109T131535Z.6271dca148a14c1f.cbe71db4361720cd9082cd7c10c0e91263fd1a14");
+
 
         new AsyncTask<Void, Void, String>() {
             protected void onPreExecute() {

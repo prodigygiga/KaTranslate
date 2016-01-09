@@ -44,15 +44,16 @@ public class TranslateService extends Service {
                 ClipData.Item item = clipData.getItemAt(0);
                 clipString = item.getText().toString();
 
-                new AsyncTask<Void, Void, String>() {
+                new AsyncTask<String, Void, String>() {
                     protected void onPreExecute() {
+                        Translate.setKey("trnsl.1.1.20160109T131535Z.6271dca148a14c1f.cbe71db4361720cd9082cd7c10c0e91263fd1a14");
                         // Pre Code
                     }
-                    protected String doInBackground(Void... unused) {
+                    protected String doInBackground(String... translateWord) {
                         // Background Code
                         String translatedText = "";
                         try {
-                            translatedText = Translate.execute("Hola, mundo!", Language.SPANISH, Language.ENGLISH);
+                            translatedText = Translate.execute(translateWord[0], Language.ENGLISH, Language.GEORGIAN);
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -62,7 +63,7 @@ public class TranslateService extends Service {
                     protected void onPostExecute(String result) {
                         Toast.makeText(getBaseContext(), result, Toast.LENGTH_SHORT).show();
                     }
-                }.execute();
+                }.execute(clipString);
 
 
 
