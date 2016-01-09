@@ -1,4 +1,4 @@
-package com.example.godot.katranlate.domain;
+package com.example.godot.katranlate.domain.models;
 
 /**
  * Created by sergi on 09/01/16.

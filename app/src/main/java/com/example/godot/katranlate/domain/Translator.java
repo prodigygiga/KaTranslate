@@ -1,5 +1,7 @@
 package com.example.godot.katranlate.domain;
 
+import com.example.godot.katranlate.domain.models.Language;
+
 import java.util.List;
 
 /**
