@@ -56,7 +56,7 @@ public class TranslateService extends Service {
                         String translatedText = "";
                         Translator translator = new YandexTranslator();
                         try {
-                            translatedText = translator.translate(translateWord[0], Language.ENGLISH, Language.GEORGIAN);
+//                            translatedText = translator.translate(translateWord[0], Language.ENGLISH, Language.GEORGIAN);
 
                         } catch (Exception e) {
                             e.printStackTrace();

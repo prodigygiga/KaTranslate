@@ -18,10 +18,8 @@ package com.example.godot.katranlate.net;
 import java.net.URL;
 import java.net.URLEncoder;
 
-import com.example.godot.katranlate.domain.Translator;
-import com.rmtheis.yandtran.ApiKeys;
+
 import com.rmtheis.yandtran.YandexTranslatorAPI;
-import com.rmtheis.yandtran.detect.Detect;
 import com.rmtheis.yandtran.language.Language;
 
 /**
