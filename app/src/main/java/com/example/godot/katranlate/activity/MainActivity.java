@@ -17,6 +17,10 @@ import com.example.godot.katranlate.adapter.LanguageAdapter;
 import com.example.godot.katranlate.service.TranslateService;
 
 public class MainActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends Activity {
     Spinner languageFrom;
     Spinner languageTo;
     ImageView startServiceButton;
@@ -33,25 +37,23 @@ public class MainActivity extends AppCompatActivity {
 
 
         languageFrom = (Spinner) findViewById(R.id.set_language_from);
-        languageFrom.setAdapter(new LanguageAdapter(MainActivity.this,new Language[]{new Language(1,"ka","ქართული"),
-                new Language(1,"ka","ქართული"),
-                new Language(1,"ka","ქართული")}));
+        List<Language> langs = Language.fromCodes(
+                getResources().getStringArray(R.array.lang_codes),
+                getResources().getStringArray(R.array.lang_names));
+        languageFrom.setAdapter(new LanguageAdapter(MainActivity.this, langs.toArray(new Language[langs.size()])));
 
 
         languageTo = (Spinner) findViewById(R.id.set_language_to);
-        languageTo.setAdapter(new LanguageAdapter(MainActivity.this,new Language[]{new Language(1,"ka","Georgian")}));
+        languageTo.setAdapter(new LanguageAdapter(MainActivity.this, new Language[]{new Language(1, "ka", "Georgian")}));
 
         startServiceButton = (ImageView) findViewById(R.id.start_service_button);
 
         startServiceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!isTranslateServiceStarted)
-                {
+                if (!isTranslateServiceStarted) {
                     startTranslationService();
-                }
-                else
-                {
+                } else {
                     stopTranslationService();
                 }
 
@@ -59,22 +61,17 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-    private void startTranslationService()
-    {
+
+    private void startTranslationService() {
         startService(new Intent(MainActivity.this, TranslateService.class));
         startServiceButton.setImageDrawable(getResources().getDrawable(R.drawable.stop));
         isTranslateServiceStarted = true;
 
     }
-    private void stopTranslationService()
-    {
+
+    private void stopTranslationService() {
         stopService(new Intent(MainActivity.this, TranslateService.class));
         startServiceButton.setImageDrawable(getResources().getDrawable(R.drawable.play));
         isTranslateServiceStarted = false;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
     }
 }
