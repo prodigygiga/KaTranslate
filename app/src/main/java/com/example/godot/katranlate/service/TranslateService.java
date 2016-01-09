@@ -17,6 +17,7 @@ public class TranslateService extends Service {
     ClipboardManager clipboardManager;
     ClipData clipData;
     String clipString;
+    ClipboardManager.OnPrimaryClipChangedListener clipChangedListener;
 
     public TranslateService() {
     }
@@ -30,10 +31,7 @@ public class TranslateService extends Service {
     public void onCreate() {
         super.onCreate();
 
-        Toast.makeText(getBaseContext(),"Service Started",Toast.LENGTH_LONG).show();
-
-        clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-        clipboardManager.addPrimaryClipChangedListener(new ClipboardManager.OnPrimaryClipChangedListener() {
+        clipChangedListener = new ClipboardManager.OnPrimaryClipChangedListener() {
             @Override
             public void onPrimaryClipChanged() {
 
@@ -57,7 +55,7 @@ public class TranslateService extends Service {
                         Translator translator = new YandexTranslator();
                         try {
                             Language en = new Language(1, "en", "English");
-                            Language ge = new Language(1, "en", "English");
+                            Language ge = new Language(2, "ka", "English");
                             translatedText = translator.translate(translateWord[0], en, ge);
 
                         } catch (Exception e) {
@@ -71,13 +69,18 @@ public class TranslateService extends Service {
                     }
                 }.execute(clipString);
             }
-        });
+        };
+
+        Toast.makeText(getBaseContext(),"Service Started",Toast.LENGTH_LONG).show();
+
+        clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+        clipboardManager.addPrimaryClipChangedListener(clipChangedListener);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-
+        clipboardManager.removePrimaryClipChangedListener(clipChangedListener);
         Toast.makeText(getBaseContext(),"Service Stopped",Toast.LENGTH_SHORT).show();
 //        stopSelf();
 
