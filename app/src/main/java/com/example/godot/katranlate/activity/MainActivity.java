@@ -56,14 +56,14 @@ public class MainActivity extends Activity {
     }
     private void startTranslationService()
     {
-        startService(new Intent(getBaseContext(),TranslateService.class));
+        startService(new Intent(MainActivity.this, TranslateService.class));
         startServiceButton.setImageDrawable(getResources().getDrawable(R.drawable.stop));
         isTranslateServiceStarted = true;
 
     }
     private void stopTranslationService()
     {
-        stopService(new Intent(getBaseContext(),TranslateService.class));
+        stopService(new Intent(MainActivity.this, TranslateService.class));
         startServiceButton.setImageDrawable(getResources().getDrawable(R.drawable.play));
         isTranslateServiceStarted = false;
     }
