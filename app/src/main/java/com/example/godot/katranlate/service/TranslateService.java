@@ -8,8 +8,10 @@ import android.os.AsyncTask;
 import android.os.IBinder;
 import android.widget.Toast;
 
+import com.example.godot.katranlate.domain.Translator;
+import com.example.godot.katranlate.domain.YandexTranslator;
 import com.rmtheis.yandtran.language.Language;
-import com.rmtheis.yandtran.translate.Translate;
+import com.example.godot.katranlate.net.Translate;
 
 public class TranslateService extends Service {
     ClipboardManager clipboardManager;
@@ -41,14 +43,14 @@ public class TranslateService extends Service {
 
                 new AsyncTask<String, Void, String>() {
                     protected void onPreExecute() {
-                        Translate.setKey("trnsl.1.1.20160109T131535Z.6271dca148a14c1f.cbe71db4361720cd9082cd7c10c0e91263fd1a14");
                         // Pre Code
                     }
                     protected String doInBackground(String... translateWord) {
                         // Background Code
                         String translatedText = "";
+                        Translator translator = new YandexTranslator();
                         try {
-                            translatedText = Translate.execute(translateWord[0], Language.ENGLISH, Language.GEORGIAN);
+                            translatedText = translator.translate(translateWord[0], Language.ENGLISH, Language.GEORGIAN);
 
                         } catch (Exception e) {
                             e.printStackTrace();

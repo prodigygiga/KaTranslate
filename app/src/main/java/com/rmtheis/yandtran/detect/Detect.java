@@ -21,7 +21,7 @@ import java.net.URLEncoder;
 import com.rmtheis.yandtran.ApiKeys;
 import com.rmtheis.yandtran.YandexTranslatorAPI;
 import com.rmtheis.yandtran.language.Language;
-import com.rmtheis.yandtran.translate.Translate;
+import com.example.godot.katranlate.net.Translate;
 
 /**
  * Provides an interface to the Yandex Translator Detect service method
