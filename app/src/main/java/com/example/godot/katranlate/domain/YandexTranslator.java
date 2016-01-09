@@ -5,6 +5,8 @@ import com.rmtheis.yandtran.ApiKeys;
 import com.rmtheis.yandtran.detect.Detect;
 import com.rmtheis.yandtran.language.Language;
 
+import java.util.List;
+
 /**
  * Created by sergi on 09/01/16.
  */
@@ -37,5 +39,10 @@ public class YandexTranslator implements Translator{
     public String translate(String phrase, Language to) throws Exception {
         Language from = Detect.execute(phrase);
         return Translate.execute(phrase, from, to);
+    }
+
+    @Override
+    public List<Language> getAvailableLanguages() {
+        return null;
     }
 }
