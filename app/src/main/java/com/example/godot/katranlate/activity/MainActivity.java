@@ -16,11 +16,11 @@ import com.example.godot.katranlate.domain.models.Language;
 import com.example.godot.katranlate.adapter.LanguageAdapter;
 import com.example.godot.katranlate.service.TranslateService;
 
-public class MainActivity extends AppCompatActivity {
-import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends Activity {
+
+
+public class MainActivity extends AppCompatActivity {
     Spinner languageFrom;
     Spinner languageTo;
     ImageView startServiceButton;
