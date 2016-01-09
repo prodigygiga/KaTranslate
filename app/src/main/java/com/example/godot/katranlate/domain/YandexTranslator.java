@@ -1,9 +1,9 @@
 package com.example.godot.katranlate.domain;
 
+import com.example.godot.katranlate.domain.models.Language;
 import com.example.godot.katranlate.net.Translate;
 import com.rmtheis.yandtran.ApiKeys;
 import com.rmtheis.yandtran.detect.Detect;
-import com.rmtheis.yandtran.language.Language;
 
 import java.util.List;
 
@@ -37,12 +37,13 @@ public class YandexTranslator implements Translator{
 
     @Override
     public String translate(String phrase, Language to) throws Exception {
-        Language from = Detect.execute(phrase);
+        // Language from = Detect.execute(phrase);
+        Language from = null;
         return Translate.execute(phrase, from, to);
     }
 
     @Override
-    public List<Language> getAvailableLanguages() {
+    public List<com.example.godot.katranlate.domain.models.Language> getAvailableLanguages() {
         return null;
     }
 }

@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import com.example.godot.katranlate.domain.Translator;
 import com.example.godot.katranlate.domain.YandexTranslator;
-import com.rmtheis.yandtran.language.Language;
+import com.example.godot.katranlate.domain.models.Language;
 import com.example.godot.katranlate.net.Translate;
 
 public class TranslateService extends Service {
@@ -56,7 +56,9 @@ public class TranslateService extends Service {
                         String translatedText = "";
                         Translator translator = new YandexTranslator();
                         try {
-//                            translatedText = translator.translate(translateWord[0], Language.ENGLISH, Language.GEORGIAN);
+                            Language en = new Language(1, "en", "English");
+                            Language ge = new Language(1, "en", "English");
+                            translatedText = translator.translate(translateWord[0], en, ge);
 
                         } catch (Exception e) {
                             e.printStackTrace();
