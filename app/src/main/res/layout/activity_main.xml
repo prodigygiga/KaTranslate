@@ -7,34 +7,38 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#252621"
     tools:context=".activity.MainActivity">
 
 
+
     <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:id="@+id/set_language_from"
+        android:foregroundGravity="center_vertical"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:background="@drawable/language_spinner_item"/>
     <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:id="@+id/set_language_to"
         android:layout_below="@+id/set_language_from"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageButton"
-        android:src="@drawable/play"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:foregroundGravity="center"
-        />
+        android:layout_marginTop="10dp"
+        android:background="@drawable/language_spinner_item"/>
 
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/start_service_button"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/play"
+        android:foregroundGravity="center"
+        android:layout_below="@+id/set_language_to"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
