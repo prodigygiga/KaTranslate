@@ -15,6 +15,9 @@ import com.example.godot.katranlate.domain.models.Language;
 import com.example.godot.katranlate.net.LanguageAdapter;
 import com.example.godot.katranlate.service.TranslateService;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends Activity {
     Spinner languageFrom;
     Spinner languageTo;
@@ -30,7 +33,10 @@ public class MainActivity extends Activity {
 
 
         languageFrom = (Spinner) findViewById(R.id.set_language_from);
-        languageFrom.setAdapter(new LanguageAdapter(MainActivity.this, new Language[]{new Language(1, "ka", "Georgian")}));
+        List<Language> langs = Language.fromCodes(
+                getResources().getStringArray(R.array.lang_codes),
+                getResources().getStringArray(R.array.lang_names));
+        languageFrom.setAdapter(new LanguageAdapter(MainActivity.this, langs.toArray(new Language[langs.size()])));
 
 
         languageTo = (Spinner) findViewById(R.id.set_language_to);

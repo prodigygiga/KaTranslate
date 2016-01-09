@@ -11,12 +11,13 @@ public class Language {
     private String iso;
     private String name;
 
-    static List<Language> fromCodes(String[] langCodes, String[] langNames){
+    public static List<Language> fromCodes(String[] langCodes, String[] langNames){
         List<Language> languages = new ArrayList<Language>();
         int i = 0;
         for (String code :
                 langCodes) {
             languages.add(new Language(i, code, langNames[i]));
+            i++;
         }
 
         return languages;
