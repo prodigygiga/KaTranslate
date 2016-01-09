@@ -19,10 +19,10 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 import com.example.godot.katranlate.domain.Translator;
+import com.example.godot.katranlate.domain.models.Language;
 import com.rmtheis.yandtran.ApiKeys;
 import com.rmtheis.yandtran.YandexTranslatorAPI;
 import com.rmtheis.yandtran.detect.Detect;
-import com.rmtheis.yandtran.language.Language;
 
 /**
  * Makes calls to the Yandex machine translation web service API
