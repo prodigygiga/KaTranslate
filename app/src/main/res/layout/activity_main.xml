@@ -9,9 +9,40 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".activity.MainActivity">
 
+<<<<<<< HEAD
     <TextView
         android:id="@+id/activivty_main_resultTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello " />
+=======
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/set_language_from"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/set_language_to"
+        android:layout_below="@+id/set_language_from"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton"
+        android:src="@drawable/play"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:foregroundGravity="center"
+        />
+
+
+>>>>>>> 36cd6d81097aa92eadae8dc7fafd0175f58d0163
 </RelativeLayout>

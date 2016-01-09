@@ -6,4 +6,7 @@
 .DS_Store
 /build
 /captures
+.name
+modules.xml
 .idea
+AppConstants.java
