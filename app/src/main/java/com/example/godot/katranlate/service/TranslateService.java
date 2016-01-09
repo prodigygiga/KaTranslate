@@ -11,7 +11,6 @@ import android.widget.Toast;
 import com.example.godot.katranlate.domain.Translator;
 import com.example.godot.katranlate.domain.YandexTranslator;
 import com.example.godot.katranlate.domain.models.Language;
-import com.example.godot.katranlate.net.Translate;
 
 public class TranslateService extends Service {
     ClipboardManager clipboardManager;
@@ -49,6 +48,7 @@ public class TranslateService extends Service {
                     protected void onPreExecute() {
                         // Pre Code
                     }
+
                     protected String doInBackground(String... translateWord) {
                         // Background Code
                         String translatedText = "";
@@ -72,7 +72,7 @@ public class TranslateService extends Service {
             }
         };
 
-        Toast.makeText(getBaseContext(),"Service Started",Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "Service Started", Toast.LENGTH_LONG).show();
 
         clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
         clipboardManager.addPrimaryClipChangedListener(clipChangedListener);
@@ -82,7 +82,7 @@ public class TranslateService extends Service {
     public void onDestroy() {
         super.onDestroy();
         clipboardManager.removePrimaryClipChangedListener(clipChangedListener);
-        Toast.makeText(getBaseContext(),"Service Stopped",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getBaseContext(), "Service Stopped", Toast.LENGTH_SHORT).show();
 //        stopSelf();
 
     }

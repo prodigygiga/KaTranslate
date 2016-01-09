@@ -1,23 +1,18 @@
 package com.example.godot.katranlate.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
-
 import com.example.godot.katranlate.R;
-import com.example.godot.katranlate.domain.models.Language;
 import com.example.godot.katranlate.adapter.LanguageAdapter;
+import com.example.godot.katranlate.domain.models.Language;
 import com.example.godot.katranlate.service.TranslateService;
 
 import java.util.List;
-
 
 
 public class MainActivity extends AppCompatActivity {

@@ -9,6 +9,8 @@ import java.util.List;
  */
 public interface Translator {
     public abstract String translate(String phrase, final Language from, final Language to) throws Exception;
+
     public abstract String translate(String phrase, final Language to) throws Exception;
+
     public abstract List<Language> getAvailableLanguages();
 }

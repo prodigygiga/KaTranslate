@@ -11,7 +11,13 @@ public class Language {
     private String iso;
     private String name;
 
-    public static List<Language> fromCodes(String[] langCodes, String[] langNames){
+    public Language(int id, String iso, String name) {
+        this.id = id;
+        this.iso = iso;
+        this.name = name;
+    }
+
+    public static List<Language> fromCodes(String[] langCodes, String[] langNames) {
         List<Language> languages = new ArrayList<Language>();
         int i = 0;
         for (String code :
@@ -21,12 +27,6 @@ public class Language {
         }
 
         return languages;
-    }
-
-    public Language(int id, String iso, String name) {
-        this.id = id;
-        this.iso = iso;
-        this.name = name;
     }
 
     public int getId() {

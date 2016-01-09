@@ -3,25 +3,16 @@ package com.example.godot.katranlate.domain;
 import com.example.godot.katranlate.domain.models.Language;
 import com.example.godot.katranlate.net.Translate;
 import com.rmtheis.yandtran.ApiKeys;
-import com.rmtheis.yandtran.detect.Detect;
 
 import java.util.List;
 
 /**
  * Created by sergi on 09/01/16.
  */
-public class YandexTranslator implements Translator{
-    public String getApiKey() {
-        return apiKey;
-    }
-
-    public void setApiKey(String apiKey) {
-        this.apiKey = apiKey;
-    }
-
+public class YandexTranslator implements Translator {
     String apiKey;
 
-    public YandexTranslator(){
+    public YandexTranslator() {
         Translate.setKey(ApiKeys.YANDEX_API_KEY);
     }
 
@@ -29,6 +20,13 @@ public class YandexTranslator implements Translator{
         this.apiKey = apiKey;
     }
 
+    public String getApiKey() {
+        return apiKey;
+    }
+
+    public void setApiKey(String apiKey) {
+        this.apiKey = apiKey;
+    }
 
     @Override
     public String translate(String phrase, final Language from, final Language to) throws Exception {

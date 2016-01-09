@@ -17,11 +17,11 @@ public class LanguageAdapter extends BaseAdapter {
     private Context context;
     private Language[] languages;
 
-    public  LanguageAdapter(Context context, Language[] languages)
-    {
+    public LanguageAdapter(Context context, Language[] languages) {
         this.context = context;
         this.languages = languages;
     }
+
     @Override
     public int getCount() {
         return languages.length;
