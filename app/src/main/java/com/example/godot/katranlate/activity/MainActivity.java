@@ -1,6 +1,7 @@
 package com.example.godot.katranlate.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -35,8 +36,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        selectedFromLanguage = new Language(1,"en","ინგლისური");
-        selectedToLanguage = new Language(2,"ka","ქართული");
+
+
+
 
         setTitle("თარგმნა");
 
@@ -46,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
                 getResources().getStringArray(R.array.lang_codes),
                 getResources().getStringArray(R.array.lang_names));
 
+        selectedFromLanguage = langs.get(0);
+        selectedToLanguage = langs.get(1);
 
         languageFrom = (Spinner) findViewById(R.id.set_language_from);
         languageFrom.setAdapter(new LanguageAdapter(MainActivity.this, langs));

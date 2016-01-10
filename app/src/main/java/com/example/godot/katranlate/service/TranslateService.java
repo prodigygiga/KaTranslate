@@ -1,5 +1,6 @@
 package com.example.godot.katranlate.service;
 
+import android.app.AlertDialog;
 import android.app.Service;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -33,9 +34,6 @@ public class TranslateService extends Service {
     }
 
 
-
-
-
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
@@ -49,9 +47,9 @@ public class TranslateService extends Service {
 
         Bundle extras = intent.getExtras();
         fromLanguage = new Language(Integer.parseInt(extras.get("fromId").toString()),
-                extras.get("fromIso").toString(),extras.get("fromName").toString());
+                extras.get("fromIso").toString(), extras.get("fromName").toString());
         toLanguage = new Language(Integer.parseInt(extras.get("toId").toString()),
-                extras.get("toIso").toString(),extras.get("toName").toString());
+                extras.get("toIso").toString(), extras.get("toName").toString());
 
         clipChangedListener = new ClipboardManager.OnPrimaryClipChangedListener() {
             @Override
@@ -67,12 +65,12 @@ public class TranslateService extends Service {
                     e.printStackTrace();
                 }
 
-                new AsyncTask<String, Void, String>() {
+                new AsyncTask<String, Void, String[]>() {
                     protected void onPreExecute() {
                         // Pre Code
                     }
 
-                    protected String doInBackground(String... translateWord) {
+                    protected String[] doInBackground(String... translateWord) {
                         // Background Code
                         String translatedText = "";
                         Translator translator = new YandexTranslator();
@@ -85,13 +83,14 @@ public class TranslateService extends Service {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        return translatedText;
+                        return new String[]{translateWord[0], translatedText};
                     }
 
-                    protected void onPostExecute(String result) {
-                        Toast.makeText(getBaseContext(), result, Toast.LENGTH_SHORT).show();
+                    protected void onPostExecute(String[] result) {
+                        Toast.makeText(getBaseContext(), result[0] + " - " + result[1], Toast.LENGTH_SHORT).show();
                     }
-                }.execute(clipString);
+
+                }.execute(checkoutClip(clipString));
             }
         };
 
@@ -99,6 +98,15 @@ public class TranslateService extends Service {
 
         clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
         clipboardManager.addPrimaryClipChangedListener(clipChangedListener);
+    }
+
+    private String checkoutClip(String clip) {
+        if (clip.contains(" ")) {
+            String[] parts = clip.split(" ");
+            return parts[0];
+        } else {
+            return clip;
+        }
     }
 
     @Override
