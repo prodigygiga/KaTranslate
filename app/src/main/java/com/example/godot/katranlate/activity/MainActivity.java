@@ -1,32 +1,27 @@
 package com.example.godot.katranlate.activity;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 
 import com.example.godot.katranlate.R;
 import com.example.godot.katranlate.domain.models.Language;
 import com.example.godot.katranlate.adapter.LanguageAdapter;
-import com.example.godot.katranlate.net.Translate;
 import com.example.godot.katranlate.service.TranslateService;
 
 import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
-    Spinner languageFrom;
-    Spinner languageTo;
+    Spinner languageFromSpinner;
+    Spinner languageToSpinner;
     ImageView startServiceButton;
     boolean isTranslateServiceStarted;
     Language selectedFromLanguage;
@@ -48,9 +43,9 @@ public class MainActivity extends AppCompatActivity {
         selectedFromLanguage = langs.get(0);
         selectedToLanguage = langs.get(1);
 
-        languageFrom = (Spinner) findViewById(R.id.set_language_from);
-        languageFrom.setAdapter(new LanguageAdapter(MainActivity.this, langs));
-        languageFrom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        languageFromSpinner = (Spinner) findViewById(R.id.set_language_from);
+        languageFromSpinner.setAdapter(new LanguageAdapter(MainActivity.this, langs));
+        languageFromSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 stopTranslationService();
@@ -64,11 +59,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
-        languageTo = (Spinner) findViewById(R.id.set_language_to);
-        languageTo.setAdapter(new LanguageAdapter(MainActivity.this, langs));
-        languageTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        languageToSpinner = (Spinner) findViewById(R.id.set_language_to);
+        languageToSpinner.setAdapter(new LanguageAdapter(MainActivity.this, langs));
+        languageToSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 stopTranslationService();
@@ -81,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        languageTo.setSelection(selectedToLanguage.getId());
+        languageToSpinner.setSelection(selectedToLanguage.getId());
 
         startServiceButton = (ImageView) findViewById(R.id.start_service_button);
 
