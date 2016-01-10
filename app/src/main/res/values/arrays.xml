@@ -5,6 +5,7 @@
         <item>en</item>
         <item>ka</item>
         <item>ru</item>
+        <item>pl</item>
     </string-array>
 
     <string-array
@@ -12,6 +13,7 @@
         <item>ინგლისური</item>
         <item>ქართული</item>
         <item>რუსული</item>
+        <item>პოლონური</item>
     </string-array>
 
 </resources>
