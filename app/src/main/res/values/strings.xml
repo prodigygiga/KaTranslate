@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">KaTranlate</string>
+    <string name="translate">თარგმნა</string>
     <string name="yandex_api_key">trnsl.1.1.20160109T131535Z.6271dca148a14c1f.cbe71db4361720cd9082cd7c10c0e91263fd1a14</string>
 </resources>
