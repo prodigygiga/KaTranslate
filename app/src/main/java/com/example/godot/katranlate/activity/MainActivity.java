@@ -1,18 +1,24 @@
 package com.example.godot.katranlate.activity;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
+
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
+
 
 import com.example.godot.katranlate.R;
-import com.example.godot.katranlate.adapter.LanguageAdapter;
 import com.example.godot.katranlate.domain.models.Language;
+import com.example.godot.katranlate.adapter.LanguageAdapter;
+import com.example.godot.katranlate.net.Translate;
 import com.example.godot.katranlate.service.TranslateService;
 
 import java.util.List;
@@ -31,12 +37,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setTitle(getResources().getString(R.string.translate));
+        setTitle(getString(R.string.translate));
 
         isTranslateServiceStarted = false;
 
-        languageFrom = (Spinner) findViewById(R.id.set_language_from);
-        final List<Language> langs = Language.fromCodes(
+        List<Language> langs = Language.fromCodes(
                 getResources().getStringArray(R.array.lang_codes),
                 getResources().getStringArray(R.array.lang_names));
 
@@ -68,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 stopTranslationService();
                 selectedToLanguage = (Language) parent.getSelectedItem();
-        languageTo.setAdapter(new LanguageAdapter(MainActivity.this, langs));
 
             }
 
@@ -78,8 +82,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         languageTo.setSelection(selectedToLanguage.getId());
-
-
 
         startServiceButton = (ImageView) findViewById(R.id.start_service_button);
 
@@ -103,9 +105,9 @@ public class MainActivity extends AppCompatActivity {
         extras.putString("fromIso",selectedFromLanguage.getIso());
         extras.putString("fromName",selectedFromLanguage.getName());
 
-        extras.putString("toId", selectedToLanguage.getId().toString());
-        extras.putString("toIso", selectedToLanguage.getIso());
-        extras.putString("toName", selectedFromLanguage.getName());
+        extras.putString("toId",selectedToLanguage.getId().toString());
+        extras.putString("toIso",selectedToLanguage.getIso());
+        extras.putString("toName",selectedFromLanguage.getName());
 
         Intent intent = new Intent(MainActivity.this, TranslateService.class);
         intent.putExtras(extras);
