@@ -7,15 +7,9 @@ import java.util.List;
  * Created by sergi on 09/01/16.
  */
 public class Language {
-    private int id;
+    private Integer id;
     private String iso;
     private String name;
-
-    public Language(int id, String iso, String name) {
-        this.id = id;
-        this.iso = iso;
-        this.name = name;
-    }
 
     public static List<Language> fromCodes(String[] langCodes, String[] langNames) {
         List<Language> languages = new ArrayList<Language>();
@@ -29,7 +23,13 @@ public class Language {
         return languages;
     }
 
-    public int getId() {
+    public Language(Integer id, String iso, String name) {
+        this.id = id;
+        this.iso = iso;
+        this.name = name;
+    }
+
+    public Integer getId() {
         return id;
     }
 
