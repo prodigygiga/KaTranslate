@@ -2,6 +2,8 @@ package com.example.godot.katranlate.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,14 +31,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
-
-
-        setTitle("თარგმნა");
+        setTitle(getResources().getString(R.string.translate));
 
         isTranslateServiceStarted = false;
 
+        languageFrom = (Spinner) findViewById(R.id.set_language_from);
         List<Language> langs = Language.fromCodes(
                 getResources().getStringArray(R.array.lang_codes),
                 getResources().getStringArray(R.array.lang_names));
@@ -69,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 stopTranslationService();
                 selectedToLanguage = (Language) parent.getSelectedItem();
+        languageTo.setAdapter(new LanguageAdapter(MainActivity.this, langs.toArray(new Language[langs.size()])));
 
             }
 
@@ -103,22 +103,22 @@ public class MainActivity extends AppCompatActivity {
         extras.putString("fromIso",selectedFromLanguage.getIso());
         extras.putString("fromName",selectedFromLanguage.getName());
 
-        extras.putString("toId",selectedToLanguage.getId().toString());
-        extras.putString("toIso",selectedToLanguage.getIso());
-        extras.putString("toName",selectedFromLanguage.getName());
+        extras.putString("toId", selectedToLanguage.getId().toString());
+        extras.putString("toIso", selectedToLanguage.getIso());
+        extras.putString("toName", selectedFromLanguage.getName());
 
         Intent intent = new Intent(MainActivity.this, TranslateService.class);
         intent.putExtras(extras);
 
         startService(intent);
-        startServiceButton.setImageDrawable(getResources().getDrawable(R.drawable.stop));
+        startServiceButton.setImageDrawable(ContextCompat.getDrawable(MainActivity.this, R.drawable.stop));
         isTranslateServiceStarted = true;
 
     }
 
     private void stopTranslationService() {
         stopService(new Intent(MainActivity.this, TranslateService.class));
-        startServiceButton.setImageDrawable(getResources().getDrawable(R.drawable.play));
+        startServiceButton.setImageDrawable(ContextCompat.getDrawable(MainActivity.this, R.drawable.play));
         isTranslateServiceStarted = false;
     }
 }

@@ -15,19 +15,16 @@
  */
 package com.example.godot.katranlate.net;
 
+import com.example.godot.katranlate.domain.models.Language;
+import com.rmtheis.yandtran.YandexTranslatorAPI;
+
 import java.net.URL;
 import java.net.URLEncoder;
-
-import com.example.godot.katranlate.domain.Translator;
-import com.example.godot.katranlate.domain.models.Language;
-import com.rmtheis.yandtran.ApiKeys;
-import com.rmtheis.yandtran.YandexTranslatorAPI;
-import com.rmtheis.yandtran.detect.Detect;
 
 /**
  * Makes calls to the Yandex machine translation web service API
  */
-public final class Translate extends YandexTranslatorAPI{
+public final class Translate extends YandexTranslatorAPI {
     private static final String BASE_URL = "http://api.yandex.ru/translate/";
     // private static final String SERVICE_URL = BASE_URL + "api/v1.5/tr.json/translate?"; // "https://translate.yandex.net/
     private static final String SERVICE_URL = "https://translate.yandex.net/api/v1.5/tr.json/translate?";
