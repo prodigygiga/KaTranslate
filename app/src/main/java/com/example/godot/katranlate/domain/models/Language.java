@@ -27,6 +27,7 @@ public class Language {
         this.id = id;
         this.iso = iso;
         this.name = name;
+    }
 
     public Integer getId() {
         return id;

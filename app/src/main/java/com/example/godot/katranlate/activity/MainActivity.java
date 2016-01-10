@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         isTranslateServiceStarted = false;
 
         languageFrom = (Spinner) findViewById(R.id.set_language_from);
-        List<Language> langs = Language.fromCodes(
+        final List<Language> langs = Language.fromCodes(
                 getResources().getStringArray(R.array.lang_codes),
                 getResources().getStringArray(R.array.lang_names));
 
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 stopTranslationService();
                 selectedToLanguage = (Language) parent.getSelectedItem();
-        languageTo.setAdapter(new LanguageAdapter(MainActivity.this, langs.toArray(new Language[langs.size()])));
+        languageTo.setAdapter(new LanguageAdapter(MainActivity.this, langs));
 
             }
 
