@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 
 import com.example.godot.katranlate.R;
@@ -24,6 +25,7 @@ import com.example.godot.katranlate.broadcastReceiver.ToggleTranslateServiceBroa
 import com.example.godot.katranlate.domain.models.Language;
 import com.example.godot.katranlate.adapter.LanguageAdapter;
 import com.example.godot.katranlate.service.TranslateService;
+import com.example.godot.katranlate.tools.Tools;
 
 import java.util.List;
 
@@ -37,6 +39,19 @@ public class MainActivity extends AppCompatActivity {
     Language selectedToLanguage;
     NotificationCompat.Builder builder;
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+        isTranslateServiceStarted = Tools.isTranslateServiceRunning(MainActivity.this,TranslateService.class);
+
+        initStartButton(isTranslateServiceStarted);
+        Tools.initNotification(MainActivity.this, isTranslateServiceStarted);
+
+    }
+
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,53 +60,12 @@ public class MainActivity extends AppCompatActivity {
 
         setTitle(getString(R.string.translate));
 
-
-//        builder = new NotificationCompat.Builder(this)
-//                .setSmallIcon(R.drawable.stop)
-//                .setContentTitle("Title")
-//                .setAutoCancel(false)
-//                .setOngoing(true)
-//                .setContentText("Text");
-//
-//        Intent resultIntent = new Intent(getBaseContext(), AutoLoad.class);
-//
-//
-////        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-////
-////        stackBuilder.addParentStack(TranslateService.class);
-////
-////        stackBuilder.addNextIntent(resultIntent);
-//        PendingIntent resultPendingIntent =
-//                PendingIntent.getBroadcast(
-//                        getBaseContext(), 0, resultIntent, 0
-//                );
-//        builder.setContentIntent(resultPendingIntent);
-//
-//        NotificationManager mNotificationManager =
-//                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//
-//        mNotificationManager.notify(0, builder.build());
+        isTranslateServiceStarted = Tools.isTranslateServiceRunning(MainActivity.this,TranslateService.class);
+        Tools.initNotification(MainActivity.this,isTranslateServiceStarted);
 
 
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        Intent resultIntent = new Intent(this, ToggleTranslateServiceBroadcastReceiver.class);
-        PendingIntent resultPendingIntent =
-                PendingIntent.getBroadcast(
-                        getBaseContext(), 0, resultIntent, 0
-                );
-        builder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.stop)
-                .setContentTitle("Title")
-                .setAutoCancel(false)
-                .setOngoing(true)
-                .setContentText("Text");
-        builder.setContentIntent(resultPendingIntent);
-
-        Notification notification = builder.build();
-        notificationManager.notify(0, notification);
 
 
-        isTranslateServiceStarted = false;
 
         List<Language> langs = Language.fromCodes(
                 getResources().getStringArray(R.array.lang_codes),
@@ -105,7 +79,8 @@ public class MainActivity extends AppCompatActivity {
         languageFromSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                stopTranslationService();
+                isTranslateServiceStarted = Tools.stopTranslationService(MainActivity.this);
+                initStartButton(isTranslateServiceStarted);
                 selectedFromLanguage = (Language) parent.getSelectedItem();
 
             }
@@ -121,7 +96,8 @@ public class MainActivity extends AppCompatActivity {
         languageToSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                stopTranslationService();
+                isTranslateServiceStarted = Tools.stopTranslationService(MainActivity.this);
+                initStartButton(isTranslateServiceStarted);
                 selectedToLanguage = (Language) parent.getSelectedItem();
 
             }
@@ -147,13 +123,17 @@ public class MainActivity extends AppCompatActivity {
 
         startServiceButton = (ImageView) findViewById(R.id.start_service_button);
 
+        initStartButton(isTranslateServiceStarted);
+
         startServiceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!isTranslateServiceStarted) {
-                    startTranslationService();
+                    isTranslateServiceStarted = Tools.startTranslationService(MainActivity.this, selectedFromLanguage, selectedToLanguage);
+                    initStartButton(isTranslateServiceStarted);
                 } else {
-                    stopTranslationService();
+                    isTranslateServiceStarted = Tools.stopTranslationService(MainActivity.this);
+                    initStartButton(isTranslateServiceStarted);
                 }
 
             }
@@ -161,30 +141,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void startTranslationService() {
-        Bundle extras = new Bundle();
-        extras.putString("fromId", selectedFromLanguage.getId().toString());
-        extras.putString("fromIso", selectedFromLanguage.getIso());
-        extras.putString("fromName", selectedFromLanguage.getName());
-
-        extras.putString("toId", selectedToLanguage.getId().toString());
-        extras.putString("toIso", selectedToLanguage.getIso());
-        extras.putString("toName", selectedFromLanguage.getName());
-
-        Intent intent = new Intent(MainActivity.this, TranslateService.class);
-        intent.putExtras(extras);
-
-        startService(intent);
-        isTranslateServiceStarted = true;
-        initStartButton(isTranslateServiceStarted);
-
-    }
-
-    private void stopTranslationService() {
-        stopService(new Intent(MainActivity.this, TranslateService.class));
-        isTranslateServiceStarted = false;
-        initStartButton(isTranslateServiceStarted);
-    }
 
     private void initStartButton(boolean isTranslateServiceStarted) {
         if (isTranslateServiceStarted)
@@ -193,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
             startServiceButton.setImageDrawable(ContextCompat.getDrawable(MainActivity.this, R.drawable.play));
 
     }
+
 
 
 }
