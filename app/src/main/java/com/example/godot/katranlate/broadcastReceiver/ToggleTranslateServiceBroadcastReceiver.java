@@ -16,10 +16,10 @@ public class ToggleTranslateServiceBroadcastReceiver extends BroadcastReceiver {
     private Language toLanguage;
     private Context context;
 
-    public ToggleTranslateServiceBroadcastReceiver()
-    {
+    public ToggleTranslateServiceBroadcastReceiver() {
 
     }
+
     public ToggleTranslateServiceBroadcastReceiver(Context context, Language fromLanguage, Language toLanguage) {
         this.fromLanguage = fromLanguage;
         this.toLanguage = toLanguage;
@@ -35,6 +35,6 @@ public class ToggleTranslateServiceBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Toast.makeText(context,"ToggleTranslateServiceBroadcastReceiver",Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "ToggleTranslateServiceBroadcastReceiver", Toast.LENGTH_SHORT).show();
     }
 }
