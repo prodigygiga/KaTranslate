@@ -1,18 +1,26 @@
 package com.example.godot.katranlate.activity;
 
+import android.annotation.TargetApi;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
 
 import com.example.godot.katranlate.R;
+import com.example.godot.katranlate.broadcastReceiver.ToggleTranslateServiceBroadcastReceiver;
 import com.example.godot.katranlate.domain.models.Language;
 import com.example.godot.katranlate.adapter.LanguageAdapter;
 import com.example.godot.katranlate.service.TranslateService;
@@ -27,13 +35,60 @@ public class MainActivity extends AppCompatActivity {
     boolean isTranslateServiceStarted;
     Language selectedFromLanguage;
     Language selectedToLanguage;
+    NotificationCompat.Builder builder;
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         setTitle(getString(R.string.translate));
+
+
+//        builder = new NotificationCompat.Builder(this)
+//                .setSmallIcon(R.drawable.stop)
+//                .setContentTitle("Title")
+//                .setAutoCancel(false)
+//                .setOngoing(true)
+//                .setContentText("Text");
+//
+//        Intent resultIntent = new Intent(getBaseContext(), AutoLoad.class);
+//
+//
+////        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+////
+////        stackBuilder.addParentStack(TranslateService.class);
+////
+////        stackBuilder.addNextIntent(resultIntent);
+//        PendingIntent resultPendingIntent =
+//                PendingIntent.getBroadcast(
+//                        getBaseContext(), 0, resultIntent, 0
+//                );
+//        builder.setContentIntent(resultPendingIntent);
+//
+//        NotificationManager mNotificationManager =
+//                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//
+//        mNotificationManager.notify(0, builder.build());
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        Intent resultIntent = new Intent(this, ToggleTranslateServiceBroadcastReceiver.class);
+        PendingIntent resultPendingIntent =
+                PendingIntent.getBroadcast(
+                        getBaseContext(), 0, resultIntent, 0
+                );
+        builder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.stop)
+                .setContentTitle("Title")
+                .setAutoCancel(false)
+                .setOngoing(true)
+                .setContentText("Text");
+        builder.setContentIntent(resultPendingIntent);
+
+        Notification notification = builder.build();
+        notificationManager.notify(0, notification);
+
 
         isTranslateServiceStarted = false;
 
@@ -77,13 +132,13 @@ public class MainActivity extends AppCompatActivity {
         });
         languageToSpinner.setSelection(selectedToLanguage.getId());
 
-        ImageView exchangeLangButton = (ImageView)findViewById(R.id.exchange_image);
+        ImageView exchangeLangButton = (ImageView) findViewById(R.id.exchange_image);
         exchangeLangButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int tmpID;
                 tmpID = (int) languageFromSpinner.getSelectedItemId();
-                languageFromSpinner.setSelection((int)languageToSpinner.getSelectedItemId(), true);
+                languageFromSpinner.setSelection((int) languageToSpinner.getSelectedItemId(), true);
 
                 languageToSpinner.setSelection(tmpID, true);
             }
@@ -107,13 +162,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void startTranslationService() {
         Bundle extras = new Bundle();
-        extras.putString("fromId",selectedFromLanguage.getId().toString());
-        extras.putString("fromIso",selectedFromLanguage.getIso());
-        extras.putString("fromName",selectedFromLanguage.getName());
+        extras.putString("fromId", selectedFromLanguage.getId().toString());
+        extras.putString("fromIso", selectedFromLanguage.getIso());
+        extras.putString("fromName", selectedFromLanguage.getName());
 
-        extras.putString("toId",selectedToLanguage.getId().toString());
-        extras.putString("toIso",selectedToLanguage.getIso());
-        extras.putString("toName",selectedFromLanguage.getName());
+        extras.putString("toId", selectedToLanguage.getId().toString());
+        extras.putString("toIso", selectedToLanguage.getIso());
+        extras.putString("toName", selectedFromLanguage.getName());
 
         Intent intent = new Intent(MainActivity.this, TranslateService.class);
         intent.putExtras(extras);
@@ -129,4 +184,6 @@ public class MainActivity extends AppCompatActivity {
         startServiceButton.setImageDrawable(ContextCompat.getDrawable(MainActivity.this, R.drawable.play));
         isTranslateServiceStarted = false;
     }
+
+
 }
