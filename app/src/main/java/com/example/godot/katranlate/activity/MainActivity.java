@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
 //
 //        mNotificationManager.notify(0, builder.build());
 
+
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         Intent resultIntent = new Intent(this, ToggleTranslateServiceBroadcastReceiver.class);
         PendingIntent resultPendingIntent =
@@ -174,15 +175,23 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtras(extras);
 
         startService(intent);
-        startServiceButton.setImageDrawable(ContextCompat.getDrawable(MainActivity.this, R.drawable.stop));
         isTranslateServiceStarted = true;
+        initStartButton(isTranslateServiceStarted);
 
     }
 
     private void stopTranslationService() {
         stopService(new Intent(MainActivity.this, TranslateService.class));
-        startServiceButton.setImageDrawable(ContextCompat.getDrawable(MainActivity.this, R.drawable.play));
         isTranslateServiceStarted = false;
+        initStartButton(isTranslateServiceStarted);
+    }
+
+    private void initStartButton(boolean isTranslateServiceStarted) {
+        if (isTranslateServiceStarted)
+            startServiceButton.setImageDrawable(ContextCompat.getDrawable(MainActivity.this, R.drawable.stop));
+        else
+            startServiceButton.setImageDrawable(ContextCompat.getDrawable(MainActivity.this, R.drawable.play));
+
     }
 
 

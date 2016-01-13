@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.widget.Toast;
 
 import com.example.godot.katranlate.domain.models.Language;
+import com.example.godot.katranlate.service.TranslateService;
+import com.example.godot.katranlate.tools.Tools;
 
 /**
  * Created by g.jobadze on 13/01/16.
@@ -35,6 +37,12 @@ public class ToggleTranslateServiceBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Toast.makeText(context, "ToggleTranslateServiceBroadcastReceiver", Toast.LENGTH_SHORT).show();
+        if (Tools.isMyServiceRunning(context, TranslateService.class)) {
+            Toast.makeText(context, "ToggleTranslateServiceBroadcastReceiver()", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Toast.makeText(context,"Service not running",Toast.LENGTH_SHORT).show();
+        }
     }
 }
