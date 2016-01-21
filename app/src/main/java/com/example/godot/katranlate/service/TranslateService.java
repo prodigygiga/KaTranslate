@@ -14,6 +14,7 @@ import com.example.godot.katranlate.domain.Translator;
 import com.example.godot.katranlate.domain.YandexTranslator;
 import com.example.godot.katranlate.domain.models.Language;
 import com.example.godot.katranlate.net.Translate;
+import com.example.godot.katranlate.tools.Tools;
 
 public class TranslateService extends Service {
 
@@ -114,6 +115,7 @@ public class TranslateService extends Service {
         super.onDestroy();
         clipboardManager.removePrimaryClipChangedListener(clipChangedListener);
         Toast.makeText(getBaseContext(), "Service Stopped", Toast.LENGTH_SHORT).show();
+        Tools.initNotification(TranslateService.this, false, fromLanguage, toLanguage);
 //        stopSelf();
 
     }

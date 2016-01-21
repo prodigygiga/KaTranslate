@@ -17,17 +17,8 @@ public class ToggleTranslateServiceBroadcastReceiver extends BroadcastReceiver {
 
     private Language fromLanguage;
     private Language toLanguage;
-    private Context context;
+//    private Context context;
 
-//    public ToggleTranslateServiceBroadcastReceiver() {
-//
-//    }
-//
-//    public ToggleTranslateServiceBroadcastReceiver(Context context, Language fromLanguage, Language toLanguage) {
-//        this.fromLanguage = fromLanguage;
-//        this.toLanguage = toLanguage;
-//        this.context = context;
-//    }
 
 
     @Override
