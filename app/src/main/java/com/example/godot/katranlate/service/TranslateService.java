@@ -88,7 +88,9 @@ public class TranslateService extends Service {
                     }
 
                     protected void onPostExecute(String[] result) {
-                        Toast.makeText(getBaseContext(), result[0] + " - " + result[1], Toast.LENGTH_SHORT).show();
+                        String translationResult = result[0] + " - " + result[1];
+                        Toast.makeText(getBaseContext(), translationResult, Toast.LENGTH_SHORT).show();
+                        Tools.initNotification(TranslateService.this, true, fromLanguage, toLanguage, translationResult);
                     }
 
                 }.execute(checkoutClip(clipString));

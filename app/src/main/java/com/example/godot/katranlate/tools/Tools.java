@@ -31,6 +31,39 @@ public class Tools {
         }
         return false;
     }
+    public static void initNotification(Context context, boolean isTranslationServiceRunning, Language fromLanguage, Language toLanguage, String text) {
+        int imageId;
+        if (isTranslationServiceRunning)
+            imageId = R.drawable.stop;
+        else
+            imageId = R.drawable.play;
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        Intent resultIntent = new Intent(context, ToggleTranslateServiceBroadcastReceiver.class);
+
+        resultIntent.putExtra("fromId", fromLanguage.getId());
+        resultIntent.putExtra("fromName", fromLanguage.getName());
+        resultIntent.putExtra("fromIso", fromLanguage.getIso());
+
+        resultIntent.putExtra("toId", toLanguage.getId());
+        resultIntent.putExtra("toName", toLanguage.getName());
+        resultIntent.putExtra("toIso", toLanguage.getIso());
+
+
+        PendingIntent resultPendingIntent =
+                PendingIntent.getBroadcast(
+                        context, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT
+                );
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+                .setSmallIcon(imageId)
+                .setContentTitle(fromLanguage.getName() + " - " + toLanguage.getName())
+                .setAutoCancel(false)
+                .setOngoing(false)
+                .setContentText(text);
+        builder.setContentIntent(resultPendingIntent);
+
+        Notification notification = builder.build();
+        notificationManager.notify(0, notification);
+    }
 
     public static void initNotification(Context context, boolean isTranslationServiceRunning, Language fromLanguage, Language toLanguage) {
         int imageId;
@@ -56,10 +89,10 @@ public class Tools {
                 );
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setSmallIcon(imageId)
-                .setContentTitle("Title")
+                .setContentTitle(fromLanguage.getName() + " - " + toLanguage.getName())
                 .setAutoCancel(false)
                 .setOngoing(false)
-                .setContentText("Text");
+                .setContentText("");
         builder.setContentIntent(resultPendingIntent);
 
         Notification notification = builder.build();
@@ -101,7 +134,7 @@ public class Tools {
 
         extras.putString("toId", selectedToLanguage.getId().toString());
         extras.putString("toIso", selectedToLanguage.getIso());
-        extras.putString("toName", selectedFromLanguage.getName());
+        extras.putString("toName", selectedToLanguage.getName());
 
         Intent intent = new Intent(context, TranslateService.class);
         intent.putExtras(extras);
@@ -116,7 +149,8 @@ public class Tools {
 
     public static boolean stopTranslationService(Context context) {
         context.stopService(new Intent(context, TranslateService.class));
-        initNotification(context, false);
+        Tools.initNotification(context, false);
+//        initNotification(context, false, null, null);
 
         return false;
     }
