@@ -32,6 +32,40 @@ public class Tools {
         return false;
     }
 
+    public static void initNotification(Context context, boolean isTranslationServiceRunning, Language fromLanguage, Language toLanguage) {
+        int imageId;
+        if (isTranslationServiceRunning)
+            imageId = R.drawable.stop;
+        else
+            imageId = R.drawable.play;
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        Intent resultIntent = new Intent(context, ToggleTranslateServiceBroadcastReceiver.class);
+
+        resultIntent.putExtra("fromId", fromLanguage.getId());
+        resultIntent.putExtra("fromName", fromLanguage.getName());
+        resultIntent.putExtra("fromIso", fromLanguage.getIso());
+
+        resultIntent.putExtra("toId", toLanguage.getId());
+        resultIntent.putExtra("toName", toLanguage.getName());
+        resultIntent.putExtra("toIso", toLanguage.getIso());
+
+
+        PendingIntent resultPendingIntent =
+                PendingIntent.getBroadcast(
+                        context, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT
+                );
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+                .setSmallIcon(imageId)
+                .setContentTitle("Title")
+                .setAutoCancel(false)
+                .setOngoing(false)
+                .setContentText("Text");
+        builder.setContentIntent(resultPendingIntent);
+
+        Notification notification = builder.build();
+        notificationManager.notify(0, notification);
+    }
+
     public static void initNotification(Context context, boolean isTranslationServiceRunning) {
         int imageId;
         if (isTranslationServiceRunning)
@@ -44,7 +78,7 @@ public class Tools {
 
         PendingIntent resultPendingIntent =
                 PendingIntent.getBroadcast(
-                        context, 0, resultIntent, 0
+                        context, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT
                 );
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setSmallIcon(imageId)
@@ -73,7 +107,7 @@ public class Tools {
         intent.putExtras(extras);
 
         context.startService(intent);
-        initNotification(context, true);
+        initNotification(context, true, selectedFromLanguage, selectedToLanguage);
 
         return true;
 
@@ -85,6 +119,11 @@ public class Tools {
         initNotification(context, false);
 
         return false;
+    }
+
+    public static boolean checkInternetConnection(Context context) {
+        //FIXME
+        return true;
     }
 
 }

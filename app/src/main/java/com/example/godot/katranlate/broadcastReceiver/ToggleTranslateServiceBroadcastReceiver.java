@@ -33,6 +33,17 @@ public class ToggleTranslateServiceBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         boolean isTranslationServiceRunning = Tools.isTranslateServiceRunning(context, TranslateService.class);
+
+
+        fromLanguage = new Language(intent.getIntExtra("fromId",-1),
+                intent.getStringExtra("fromIso"),
+                intent.getStringExtra("fromName"));
+
+        toLanguage = new Language(intent.getIntExtra("toId",-1),
+                intent.getStringExtra("toIso"),
+                intent.getStringExtra("toName"));
+
+//        Toast.makeText(context, toLanguage.getIso(), Toast.LENGTH_SHORT).show();
         if (isTranslationServiceRunning) {
             Tools.stopTranslationService(context);
         }

@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         isTranslateServiceStarted = Tools.isTranslateServiceRunning(MainActivity.this,TranslateService.class);
 
         initStartButton(isTranslateServiceStarted);
-        Tools.initNotification(MainActivity.this, isTranslateServiceStarted);
+        Tools.initNotification(MainActivity.this, isTranslateServiceStarted, selectedFromLanguage, selectedToLanguage);
 
     }
 
@@ -60,8 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
         setTitle(getString(R.string.translate));
 
-        isTranslateServiceStarted = Tools.isTranslateServiceRunning(MainActivity.this,TranslateService.class);
-        Tools.initNotification(MainActivity.this,isTranslateServiceStarted);
+
 
 
 
@@ -74,6 +73,10 @@ public class MainActivity extends AppCompatActivity {
         selectedFromLanguage = langs.get(0);
         selectedToLanguage = langs.get(1);
 
+
+        isTranslateServiceStarted = Tools.isTranslateServiceRunning(MainActivity.this, TranslateService.class);
+        Tools.initNotification(MainActivity.this,isTranslateServiceStarted, selectedFromLanguage, selectedToLanguage);
+
         languageFromSpinner = (Spinner) findViewById(R.id.set_language_from);
         languageFromSpinner.setAdapter(new LanguageAdapter(MainActivity.this, langs));
         languageFromSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -82,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
                 isTranslateServiceStarted = Tools.stopTranslationService(MainActivity.this);
                 initStartButton(isTranslateServiceStarted);
                 selectedFromLanguage = (Language) parent.getSelectedItem();
+                Tools.initNotification(MainActivity.this, isTranslateServiceStarted, selectedFromLanguage, selectedToLanguage);
+
 
             }
 
@@ -99,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
                 isTranslateServiceStarted = Tools.stopTranslationService(MainActivity.this);
                 initStartButton(isTranslateServiceStarted);
                 selectedToLanguage = (Language) parent.getSelectedItem();
+                Tools.initNotification(MainActivity.this, isTranslateServiceStarted, selectedFromLanguage, selectedToLanguage);
 
             }
 
