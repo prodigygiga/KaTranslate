@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 
 import com.example.godot.katranlate.R;
+import com.example.godot.katranlate.activity.MainActivity;
 import com.example.godot.katranlate.broadcastReceiver.ToggleTranslateServiceBroadcastReceiver;
 import com.example.godot.katranlate.domain.models.Language;
 import com.example.godot.katranlate.service.TranslateService;
@@ -31,6 +32,7 @@ public class Tools {
         }
         return false;
     }
+
     public static void initNotification(Context context, boolean isTranslationServiceRunning, Language fromLanguage, Language toLanguage, String text) {
         int imageId;
         if (isTranslationServiceRunning)
@@ -58,7 +60,8 @@ public class Tools {
                 .setContentTitle(fromLanguage.getName() + " - " + toLanguage.getName())
                 .setAutoCancel(false)
                 .setOngoing(false)
-                .setContentText(text);
+                .setContentText(text)
+                .addAction(android.R.drawable.sym_def_app_icon, "აპლიკაციის გახსნა", resultPendingIntent);
         builder.setContentIntent(resultPendingIntent);
 
         Notification notification = builder.build();
@@ -87,12 +90,14 @@ public class Tools {
                 PendingIntent.getBroadcast(
                         context, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT
                 );
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setSmallIcon(imageId)
                 .setContentTitle(fromLanguage.getName() + " - " + toLanguage.getName())
                 .setAutoCancel(false)
                 .setOngoing(false)
-                .setContentText("");
+                .setContentText("")
+                .addAction(android.R.drawable.sym_def_app_icon, "აპლიკაციის გახსნა", resultPendingIntent);
         builder.setContentIntent(resultPendingIntent);
 
         Notification notification = builder.build();
@@ -118,7 +123,8 @@ public class Tools {
                 .setContentTitle("Title")
                 .setAutoCancel(false)
                 .setOngoing(false)
-                .setContentText("Text");
+                .setContentText("Text")
+                .addAction(android.R.drawable.sym_def_app_icon, "აპლიკაციის გახსნა", resultPendingIntent);
         builder.setContentIntent(resultPendingIntent);
 
         Notification notification = builder.build();

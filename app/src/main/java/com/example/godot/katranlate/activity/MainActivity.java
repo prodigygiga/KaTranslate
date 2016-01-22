@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -35,12 +36,15 @@ public class MainActivity extends AppCompatActivity {
     NotificationCompat.Builder builder;
 
 
+
+
+
     @Override
     protected void onResume() {
         super.onResume();
 
 
-        isTranslateServiceStarted = Tools.isTranslateServiceRunning(MainActivity.this,TranslateService.class);
+        isTranslateServiceStarted = Tools.isTranslateServiceRunning(MainActivity.this, TranslateService.class);
 
         initStartButton(isTranslateServiceStarted);
         Tools.initNotification(MainActivity.this, isTranslateServiceStarted, selectedFromLanguage, selectedToLanguage);
@@ -56,11 +60,6 @@ public class MainActivity extends AppCompatActivity {
         setTitle(getString(R.string.translate));
 
 
-
-
-
-
-
         List<Language> langs = Language.fromCodes(
                 getResources().getStringArray(R.array.lang_codes),
                 getResources().getStringArray(R.array.lang_names));
@@ -70,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         isTranslateServiceStarted = Tools.isTranslateServiceRunning(MainActivity.this, TranslateService.class);
-        Tools.initNotification(MainActivity.this,isTranslateServiceStarted, selectedFromLanguage, selectedToLanguage);
+        Tools.initNotification(MainActivity.this, isTranslateServiceStarted, selectedFromLanguage, selectedToLanguage);
 
         languageFromSpinner = (Spinner) findViewById(R.id.set_language_from);
         languageFromSpinner.setAdapter(new LanguageAdapter(MainActivity.this, langs));
@@ -150,7 +149,6 @@ public class MainActivity extends AppCompatActivity {
             startServiceButton.setImageDrawable(ContextCompat.getDrawable(MainActivity.this, R.drawable.play));
 
     }
-
 
 
 }

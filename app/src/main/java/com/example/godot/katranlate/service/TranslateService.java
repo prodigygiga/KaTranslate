@@ -97,7 +97,7 @@ public class TranslateService extends Service {
             }
         };
 
-        Toast.makeText(getBaseContext(), "Service Started", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "თარგმნის სერვისი ჩაირთო", Toast.LENGTH_LONG).show();
 
         clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
         clipboardManager.addPrimaryClipChangedListener(clipChangedListener);
@@ -116,7 +116,7 @@ public class TranslateService extends Service {
     public void onDestroy() {
         super.onDestroy();
         clipboardManager.removePrimaryClipChangedListener(clipChangedListener);
-        Toast.makeText(getBaseContext(), "Service Stopped", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getBaseContext(), "თარგმნის სერვისი გამოირთო", Toast.LENGTH_SHORT).show();
         Tools.initNotification(TranslateService.this, false, fromLanguage, toLanguage);
 //        stopSelf();
 
