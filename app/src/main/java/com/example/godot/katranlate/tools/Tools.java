@@ -7,8 +7,10 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.widget.Toast;
 
 import com.example.godot.katranlate.R;
 import com.example.godot.katranlate.activity.MainActivity;
@@ -134,22 +136,29 @@ public class Tools {
 
 
     public static boolean startTranslationService(Context context, Language selectedFromLanguage, Language selectedToLanguage) {
-        Bundle extras = new Bundle();
-        extras.putString("fromId", selectedFromLanguage.getId().toString());
-        extras.putString("fromIso", selectedFromLanguage.getIso());
-        extras.putString("fromName", selectedFromLanguage.getName());
+        if (checkInternetConnection(context)) {
 
-        extras.putString("toId", selectedToLanguage.getId().toString());
-        extras.putString("toIso", selectedToLanguage.getIso());
-        extras.putString("toName", selectedToLanguage.getName());
+            Bundle extras = new Bundle();
+            extras.putString("fromId", selectedFromLanguage.getId().toString());
+            extras.putString("fromIso", selectedFromLanguage.getIso());
+            extras.putString("fromName", selectedFromLanguage.getName());
 
-        Intent intent = new Intent(context, TranslateService.class);
-        intent.putExtras(extras);
+            extras.putString("toId", selectedToLanguage.getId().toString());
+            extras.putString("toIso", selectedToLanguage.getIso());
+            extras.putString("toName", selectedToLanguage.getName());
 
-        context.startService(intent);
-        initNotification(context, true, selectedFromLanguage, selectedToLanguage);
+            Intent intent = new Intent(context, TranslateService.class);
+            intent.putExtras(extras);
 
-        return true;
+            context.startService(intent);
+            initNotification(context, true, selectedFromLanguage, selectedToLanguage);
+
+            return true;
+        }
+        else {
+            Toast.makeText(context,"ინტერნეტთან წვდომა ვერ ხერხდება",Toast.LENGTH_SHORT).show();
+            return false;
+        }
 
 
     }
@@ -163,8 +172,10 @@ public class Tools {
     }
 
     public static boolean checkInternetConnection(Context context) {
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        return cm.getActiveNetworkInfo() != null;
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
 }
