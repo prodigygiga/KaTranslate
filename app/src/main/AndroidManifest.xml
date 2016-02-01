@@ -12,10 +12,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <receiver android:name=".broadcastReceiver.ToggleTranslateServiceBroadcastReceiver">
+        <receiver android:name=".broadcastReceiver.ToggleTranslateServiceBroadcastReceiver"></receiver>
 
-        </receiver>
-        <activity android:name=".activity.MainActivity"
+        <activity
+            android:name=".activity.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,8 +26,13 @@
 
         <service
             android:name=".service.TranslateService"
-            android:enabled="true"
-            android:exported="true" />
+            android:enabled="true"/>
+
+        <activity android:name=".activity.TranslatePopupActivity"
+            android:theme="@style/Base.Theme.AppCompat.Dialog.PopupTheme"
+            android:launchMode="singleInstance"></activity>
     </application>
+
+
 
 </manifest>

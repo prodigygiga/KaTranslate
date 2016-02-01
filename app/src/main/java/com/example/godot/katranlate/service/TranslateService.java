@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.widget.Toast;
 
+import com.example.godot.katranlate.activity.TranslatePopupActivity;
 import com.example.godot.katranlate.domain.Translator;
 import com.example.godot.katranlate.domain.YandexTranslator;
 import com.example.godot.katranlate.domain.models.Language;
@@ -35,12 +36,7 @@ public class TranslateService extends Service {
     }
 
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
 
-
-        return super.onStartCommand(intent, flags, startId);
-    }
 
     @Override
     public void onStart(Intent intent, int startId) {
@@ -62,38 +58,50 @@ public class TranslateService extends Service {
 
                     ClipData.Item item = clipData.getItemAt(0);
                     clipString = item.getText().toString();
+
+//                    Toast.makeText(TranslateService.this, checkoutClip(clipString), Toast.LENGTH_SHORT).show();
+                    new AsyncTask<String, Void, String[]>() {
+                        protected void onPreExecute() {
+                            // Pre Code
+                        }
+
+                        protected String[] doInBackground(String... translateWord) {
+                            // Background Code
+                            String translatedText = "";
+                            Translator translator = new YandexTranslator();
+                            try {
+//                            Language en = new Language(1, "en", "English");
+//                            Language ge = new Language(2, "ka", "Georgian");
+
+                                translatedText = translator.translate(translateWord[0], fromLanguage, toLanguage);
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            return new String[]{translateWord[0], translatedText};
+                        }
+
+                        protected void onPostExecute(String[] result) {
+                            String translationResult = result[0] + " - " + result[1];
+//                            Toast.makeText(getBaseContext(), translationResult, Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(TranslateService.this, TranslatePopupActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                            Bundle extras = new Bundle();
+                            extras.putString("translationResult",translationResult);
+                            intent.putExtras(extras);
+                            startActivity(intent);
+                            Tools.initNotification(TranslateService.this, true, fromLanguage, toLanguage, translationResult);
+                        }
+
+                    }.execute(checkoutClip(clipString));
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
-                new AsyncTask<String, Void, String[]>() {
-                    protected void onPreExecute() {
-                        // Pre Code
-                    }
 
-                    protected String[] doInBackground(String... translateWord) {
-                        // Background Code
-                        String translatedText = "";
-                        Translator translator = new YandexTranslator();
-                        try {
-//                            Language en = new Language(1, "en", "English");
-//                            Language ge = new Language(2, "ka", "Georgian");
 
-                            translatedText = translator.translate(translateWord[0], fromLanguage, toLanguage);
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        return new String[]{translateWord[0], translatedText};
-                    }
-
-                    protected void onPostExecute(String[] result) {
-                        String translationResult = result[0] + " - " + result[1];
-                        Toast.makeText(getBaseContext(), translationResult, Toast.LENGTH_SHORT).show();
-                        Tools.initNotification(TranslateService.this, true, fromLanguage, toLanguage, translationResult);
-                    }
-
-                }.execute(checkoutClip(clipString));
             }
         };
 
